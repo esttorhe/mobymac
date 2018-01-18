@@ -78,7 +78,9 @@ function main() {
   echo
 
   echo "=== Setting up NFS mount..."
-  docker-machine-nfs ${VMNAME}
+  # extra mount opts fixes issues in high sierra, see
+  # https://github.com/adlogix/docker-machine-nfs/issues/79
+  docker-machine-nfs --mount-opts="async,noatime,actimeo=1,nolock,vers=3,udp" ${VMNAME}
   echo "===> OK"
   echo
 
